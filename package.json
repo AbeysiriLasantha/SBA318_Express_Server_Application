@@ -1,0 +1,16 @@
+{
+  "name": "sba318_expressserver_v1",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "node --watch --env-file=.env server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
