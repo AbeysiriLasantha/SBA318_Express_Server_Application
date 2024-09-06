@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update-Delete Student</title>
+    <link rel = "stylesheet" href ="styles.css">
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                student_id: params.get('student_id'),
+                fname: params.get('fname'),
+                lname: params.get('lname'),
+                academic_year: params.get('academic_year'),
+                registered_year: params.get('registered_year')
+            };
+        }
+
+        async function handleEdit() {
+            const queryParams = getQueryParams();
+            const updatedData = {
+                student_id: queryParams.student_id,
+                fname: document.getElementById('fname-input').value,
+                lname: document.getElementById('lname-input').value,
+                academic_year: document.getElementById('academic_year-input').value,
+                registered_year: document.getElementById('registered_year-input').value
+            };
+
+            try {
+                const response = await fetch('/api/students/edit', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+
+                if (response.ok) {
+                    alert('Student details updated successfully');
+                    window.close(); // Simply close the window
+                } else {
+                    alert('Failed to update student details');
+                    window.close(); // Simply close the window
+                }
+            } catch (error) {
+                alert(`Error updating student details :${error}`);
+                window.close(); // Simply close the window
+            }
+        }
+
+        async function handleDelete() {
+            const queryParams = getQueryParams();
+
+            try {
+                const response = await fetch(`/api/students/delete/${queryParams.student_id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Student deleted successfully');
+                    window.close(); // Close the window after successful deletion
+                } else {
+                    alert('Failed to delete student');
+                    window.close(); // Simply close the window
+                }
+            } catch (error) {
+                alert(`Error deleting student : ${error}`);
+                window.close(); // Simply close the window
+            }
+        }
+
+        function handleCancel() {
+            window.close(); // Simply close the window
+        }
+
+        window.onload = function() {
+            const queryParams = getQueryParams();
+            document.getElementById('student_id').textContent = queryParams.student_id;
+            document.getElementById('fname-input').value = queryParams.fname;
+            document.getElementById('lname-input').value = queryParams.lname;
+            document.getElementById('academic_year-input').value = queryParams.academic_year;
+            document.getElementById('registered_year-input').value = queryParams.registered_year;
+        }
+    </script>
+</head>
+<body>
+    <div class="bodyDiv"> 
+        <h2>Edit-Delete Student</h2>
+        <p><strong>Student ID:</strong> <span id="student_id"></span></p>
+        <p><strong>First Name:</strong> <input type="text" id="fname-input"></p>
+        <p><strong>Last Name:</strong> <input type="text" id="lname-input"></p>
+        <p><strong>Academic Year:</strong> <input type="text" id="academic_year-input"></p>
+        <p><strong>Registered Year:</strong> <input type="text" id="registered_year-input"></p>
+
+        <button class="editRemoveBtn" onclick="handleEdit()">Edit</button>
+        <button class="editRemoveBtn" onclick="handleDelete()">Delete</button>
+        <button class="editRemoveBtn" onclick="handleCancel()">Cancel</button>
+    </div>
+</body>
+</html>

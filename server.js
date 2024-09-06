@@ -21,7 +21,7 @@ app.use(express.json());
 
 // Use the CORS middleware before defining routes
 app.use(cors({
-    origin: originPath // Replace with the URL of your client-side application
+    origin: originPath  
 }));
 
 // Serve static files from the 'public' directory
@@ -34,6 +34,7 @@ app.get ('/api/students', (req,res) => {
     res.send (students);
 })
 
+//Testing purpose
 //This api fetch a student for a given student ID
 app.get ('/api/students/:id', (req,res) => {
     //console.log(req.params.id)
@@ -45,44 +46,64 @@ app.get ('/api/students/:id', (req,res) => {
 })
 
 
-// This api is use for adding or updating a student
+// This api is used to adding  a student
 app.post('/api/students/add', (req, res) => {
     const {student_id, fname, lname, academic_year, registered_year} = req.body;
-
-    // Simple validation (you can expand this as needed)
+    // Simple validation 
     if (!student_id || !fname || !lname || !academic_year || !registered_year) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
-
     // Find the student by ID
-    const studentIndex = students.findIndex(student => student.student_id === student_id);
-
+    const studentIndex = students.findIndex(student => student.student_id === parseInt(student_id));
+   
     if (studentIndex !== -1) {
         // Student exists, update their details
         students[studentIndex] = { student_id, fname, lname, academic_year, registered_year };
-        return res.status(200).json({ message: 'Student updated successfully.', student: students[studentIndex] });
+        return res.status(200).json({ message: 'Student ID already exists ..!.', student: students[studentIndex] });
     } else {
         // Student does not exist, add new student
+        //student_id=parseInt(student_id)
+        //const intstudent_id=parseInt(student_id)
         const newStudent = { student_id, fname, lname, academic_year, registered_year };
         students.push(newStudent);
         return res.status(201).json({ message: 'Student added successfully.', student: newStudent });
     }
 });
 
+
+// This api is use for Edit  a student
+app.put('/api/students/edit', (req, res) => {
+    const {student_id, fname, lname, academic_year, registered_year} = req.body;
+   
+    // Simple validation 
+    if (!student_id || !fname || !lname || !academic_year || !registered_year) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
+      
+    // Find the student by ID
+    const studentIndex = students.findIndex(student => student.student_id === parseInt(student_id));
+     if (studentIndex !== -1) {
+        // Student exists, update their details
+        students[studentIndex] = { student_id, fname, lname, academic_year, registered_year };
+        return res.status(200).json({ message: 'Student updated successfully ..', student: students[studentIndex] });
+    } else {
+        return res.status(404).json({ message: 'Student does not exists..', student: student_id });
+    }
+});
+
+
 // Deleting a student
 app.delete('/api/students/delete/:id', (req, res) => {
     //const { student_id } = req.body;
     const student_id = parseInt(req.params.id);
-
     // Simple validation
     if (!student_id) {
         return res.status(400).json({ message: 'Student ID is required.' });
     }
 
     // Find the student by ID
-    const studentIndex = students.findIndex(student => student.student_id === student_id);
-
-    if (studentIndex !== -1) {
+    const studentIndex = students.findIndex(student => student.student_id === parseInt(student_id));
+     if (studentIndex !== -1) {
         // Student exists, delete the student
         const deletedStudent = students.splice(studentIndex, 1); // Remove the student from the array
         return res.status(200).json({ message: 'Student deleted successfully.', student: deletedStudent[0] });

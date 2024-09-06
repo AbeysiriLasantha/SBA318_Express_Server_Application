@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: rgb(255, 255, 255);
 }
 
 header {
@@ -36,24 +37,15 @@ nav ul li:hover {
 
 main {
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    height: 350px;
 }
-
-#student-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.student-card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.student-card input[type="checkbox"] {
-    margin-right: 10px;
-}
+/* 
+#student-info{
+    display: flex;
+    justify-content: center;
+} */
 
 .buttons {
     margin-top: 20px;
@@ -68,28 +60,86 @@ main {
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
+    font-size: 17px;
+    width: 150px;
 }
 
 .buttons button:hover {
     background-color: #45a049;
 }
 
-/* Simple styling for the grid and rows */
-.student-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    margin: 20px;
+.table-container {
+    display: flex;
+    justify-content: center; /* Centers the table horizontally */
+    align-items: center; /* Centers the table vertically */
+    height: 100vh; /* Full height of the viewport */
 }
-.student-row {
-    display: contents;
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
+
+.student-table {
+    width: 200%;
+    height: 400px; /* Set the desired height */
+    border-collapse: collapse;
+    overflow-y: auto; /* Add vertical scrolling if content exceeds height */
+    display: block; /* Ensures the table is scrollable */
 }
-.student-row p, .student-row input {
-    margin: 0;
-    padding: 5px;
+
+.student-table th, .student-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
 }
-.student-row input[type="checkbox"] {
-    align-self: center;
+
+.student-table th {
+    background-color: #f4f4f4;
+}
+
+.student-table td {
+    background-color: #ffffff;
+}
+
+#submitButton, #cancelButton {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 17px;
+    width: 100px;
+}
+
+.editRemoveBtn {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 17px;
+    width: 100px;
+}
+
+footer {
+    background-color: rgb(11, 3, 78);
+    text-align: center;
+    /* height: 25px; */
+    padding: 8px;
+    margin-top: 15px;
+    font-size: 16px;
+    color: white;
+}
+
+
+#studentForm{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: beige;
+    padding: 15px;
+}
+
+.bodyDiv{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: beige;
+    padding: 25px;
 }
